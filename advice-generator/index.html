@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Advice generator app</title>
+    <link rel="stylesheet" href="style.css" />
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body>
+    <title>Frontend Mentor | Advice generator app</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="advice-card">
+        <p class="title"></p>
+        <p class="advice"></p>
+        <div class="divider"></div>
+        <div class="button-container">
+          <div class="button">
+            <img src="./images/icon-dice.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function fetchAdvice() {
+        const response = await fetch("https://api.adviceslip.com/advice");
+        const data = await response.json();
+        const advice = data.slip.advice;
+        const number = data.slip.id;
+        console.log(data);
+        document.querySelector(".advice").innerHTML = advice;
+        document.querySelector(".title").innerHTML = `ADVICE #${number}`;
+      }
 
-  Advice #<!-- Advice ID goes here -->
-
-  "<!-- Advice text goes here -->"
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
-</body>
+      document.onload = fetchAdvice();
+      document.querySelector(".button").addEventListener("click", fetchAdvice);
+    </script>
+  </body>
 </html>
